@@ -1,26 +1,34 @@
 #include <iostream>
 #include <assert.h>
 
-char size(int cms) {
+#define SIZE_NUMBER_MIN 38
+#define SIZE_NUMBER_MAX 42
+
+#define TSHIRT_SIZE_SMALL 'S'
+#define TSHIRT_SIZE_MEDIUM 'M'
+#define TSHIRT_SIZE_LARGE 'L'
+
+char fetchSize(int tshirt_size_cms) {
     char sizeName = '\0';
-    if(cms < 38) {
-        sizeName = 'S';
-    } else if(cms > 38 && cms < 42) {
-        sizeName = 'M';
-    } else if(cms > 42) {
-        sizeName = 'L';
+    if(tshirt_size_cms <= SIZE_NUMBER_MIN) {
+        sizeName = TSHIRT_SIZE_SMALL;
+    } else if(tshirt_size_cms > SIZE_NUMBER_MIN && tshirt_size_cms <= SIZE_NUMBER_MAX) {
+        sizeName = TSHIRT_SIZE_MEDIUM;
+    } else if(tshirt_size_cms > SIZE_NUMBER_MAX) {
+        sizeName = TSHIRT_SIZE_LARGE;
     }
     return sizeName;
 }
 
 int main() {
-    assert(size(37) == 'S');
-    assert(size(40) == 'M');
-    assert(size(43) == 'L');
-    
-    assert(size(38) == 'S');
-    assert(size(42) == 'M');
+    assert(fetchSize(37) == 'S');
+    assert(fetchSize(40) == 'M');
+    assert(fetchSize(43) == 'L');
 
-    std::cout << "All is well (maybe!)\n";
+    assert(fetchSize(38) == 'S');
+    assert(fetchSize(42) == 'M');
+
+
+    std::cout << "All is well.\n";
     return 0;
 }
