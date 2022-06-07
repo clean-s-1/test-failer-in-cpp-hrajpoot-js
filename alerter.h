@@ -9,20 +9,20 @@ class Alerter{
 
     public:
     float convertFarenheitToCelcius(const float farenheit);
-    void alertInCelcius(float farenheit);
+    void alertInCelcius(const float farenheit);
     void validateFailureCount();
     void addFailure();
 
-    virtual int networkAlertStub(float celcius) = 0;
+    virtual int networkAlertStub(const float celcius) = 0;
 };
 
 class TestAlerter : public Alerter {
 
     public:
-    virtual int networkAlertStub(float celcius);
+    virtual int networkAlertStub(const float celcius);
 };
 
 class ProductionAlerter : public Alerter {
     public: 
-    virtual int networkAlertStub(float celcius);
+    virtual int networkAlertStub(const float celcius);
 };
