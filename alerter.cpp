@@ -1,63 +1,65 @@
-#include <iostream>
-#include <assert.h>
-#include <string.h>
+#include "alerter.h"
 
-#define MAX_THRESHOLD 151
+int gloabl::alertFailureCount = 0;
 
-int alertFailureCount = 0;
-std::string environment;
-
-int networkAlertStub(float celcius) {
-    int returnValue;
-    std::cout << "ALERT: Temperature is " << celcius << " celcius.\n";
-    if (environment == "prd"){
-        if(celcius > MAX_THRESHOLD){
-            std::cout << "Maximum threshold for production is " << MAX_THRESHOLD << " celcius."<< std::endl;
-            returnValue=500;
-        }
-        else{
-            returnValue=200;
-        }
-    }
-    else{
-        // Return 200 for ok
-        // Return 500 for not-ok
-        // stub always succeeds and returns 200
-        returnValue=200;
-    }
-    return returnValue;
+int TestAlerter::networkAlertStub(float celcius) {
+    std::cout << "TEST ALERT: Temperature is " << celcius << " celcius.\n";
+    // Return 200 for ok
+    // Return 500 for not-ok
+    // stub always succeeds and returns 200
+    return 200;
 }
 
-void alertInCelcius(float farenheit) {
-    float celcius = (farenheit - 32) * 5 / 9;
+int ProductionAlerter::networkAlertStub(float celcius) {
+    std::cout << "PRD ALERT: Temperature is " << celcius << " celcius.\n";
+
+    if(MAX_THRESHOLD > celcius) {
+        return 200;
+    }
+    else {
+        return 500;
+    }
+}
+
+float Alerter::convertFarenheitToCelcius(const float farenheit) {
+    return (farenheit - 32) * 5 / 9;
+}
+
+void Alerter::addFailure() {
+    gloabl::alertFailureCount += 1;
+}
+
+void Alerter::validateFailureCount() {
+    assert (gloabl::alertFailureCount > 0);
+}
+
+void Alerter::alertInCelcius(float farenheit) {
+    float celcius = convertFarenheitToCelcius(farenheit);
+
     int returnCode = networkAlertStub(celcius);
+
     if (returnCode != 200) {
         // non-ok response is not an error! Issues happen in life!
         // let us keep a count of failures to report
         // However, this code doesn't count failures!
         // Add a test below to catch this bug. Alter the stub above, if needed.
-        alertFailureCount += 0;
-        assert (alertFailureCount > 0);
+        addFailure();
+        validateFailureCount();
     }
 }
 
-int main(int argc, char* argv[]) {
+int main() {
+    //Run alerter in test environement
+    Alerter *alerterObj = new TestAlerter();
 
-    if(argc == 2){
-        std::string env(argv[1]);
-        assert (env == "test" || env == "prd");
-        environment = env; 
-    }
-    else{
-        std::cout << "Please run me by passing env test or prd only." << std::endl;
-        return -1; 
-    }
+    //Run alerter in production environement 
+    //Alerter *alerterObj = new ProductionAlerter();
+ 
+    alerterObj->alertInCelcius(400.5);
+    alerterObj->alertInCelcius(303.6);
+    alerterObj->alertInCelcius(303.8);
 
-    alertInCelcius(400.5);
-    alertInCelcius(303.6);
-
-    std::cout << alertFailureCount << " alerts failed.\n";
-    std::cout << "All is well (maybe!)\n";
-
+    std::cout << gloabl::alertFailureCount << " alerts failed.\n";
+    std::cout << "All is well.\n";
     return 0;
 }
