@@ -35,7 +35,6 @@ void Alerter::validateFailureCount() {
 
 void Alerter::alertInCelcius(float farenheit) {
     float celcius = convertFarenheitToCelcius(farenheit);
-
     int returnCode = networkAlertStub(celcius);
 
     if (returnCode != 200) {
