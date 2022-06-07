@@ -1,6 +1,6 @@
 #include <iostream>
 #include <assert.h>
-#include <string>
+#include <string.h>
 #define NUMBER_OF_COLORS 5
 
 const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
