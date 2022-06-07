@@ -2,7 +2,7 @@
 
 int gloabl::alertFailureCount = 0;
 
-int TestAlerter::networkAlertStub(float celcius) {
+int TestAlerter::networkAlertStub(const float celcius) {
     std::cout << "TEST ALERT: Temperature is " << celcius << " celcius.\n";
     // Return 200 for ok
     // Return 500 for not-ok
@@ -10,7 +10,7 @@ int TestAlerter::networkAlertStub(float celcius) {
     return 200;
 }
 
-int ProductionAlerter::networkAlertStub(float celcius) {
+int ProductionAlerter::networkAlertStub(const float celcius) {
     std::cout << "PRD ALERT: Temperature is " << celcius << " celcius.\n";
 
     if(MAX_THRESHOLD > celcius) {
@@ -33,7 +33,7 @@ void Alerter::validateFailureCount() {
     assert (gloabl::alertFailureCount > 0);
 }
 
-void Alerter::alertInCelcius(float farenheit) {
+void Alerter::alertInCelcius(const float farenheit) {
     float celcius = convertFarenheitToCelcius(farenheit);
     int returnCode = networkAlertStub(celcius);
 
