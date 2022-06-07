@@ -19,10 +19,10 @@ class Alerter{
 class TestAlerter : public Alerter {
 
     public:
-    virtual int networkAlertStub(const float celcius);
+    int networkAlertStub(const float celcius) override;
 };
 
 class ProductionAlerter : public Alerter {
     public: 
-    virtual int networkAlertStub(const float celcius);
+    int networkAlertStub(const float celcius) override;
 };
