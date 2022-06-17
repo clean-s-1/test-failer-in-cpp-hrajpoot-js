@@ -44,8 +44,8 @@ void validateColorPairString(int majorColorIndex, int minorColorIndex, const std
 int printColorMap() {
     int i = 0, j = 0;
 
-    for(i = 0; i < 5; i++) {
-        for(j = 0; j < 5; j++) {
+    for(i = 0; i < NUMBER_OF_MAJOR_COLORS; i++) {
+        for(j = 0; j < NUMBER_OF_MINOR_COLORS; j++) {
             std::string formatedColorPairString = getFormatedColorPairString(i, j);
             validateColorPairString(i, j, formatedColorPairString);
             printFormatedColorPair(formatedColorPairString);
@@ -56,7 +56,7 @@ int printColorMap() {
 
 int main() {
     int result = printColorMap();
-    assert(result == 25);
+    assert(result == (NUMBER_OF_MAJOR_COLORS * NUMBER_OF_MINOR_COLORS));
     std::cout << "All is well \n";
     return 0;
 }
