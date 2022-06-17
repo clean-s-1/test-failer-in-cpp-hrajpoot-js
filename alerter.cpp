@@ -43,7 +43,6 @@ void Alerter::alertInCelcius(const float farenheit) {
         // However, this code doesn't count failures!
         // Add a test below to catch this bug. Alter the stub above, if needed.
         addFailure();
-        validateFailureCount();
     }
 }
 
@@ -59,6 +58,8 @@ int main() {
     alerterObj->alertInCelcius(303.8);
 
     std::cout << gloabl::alertFailureCount << " alerts failed.\n";
+    alerterObj->validateFailureCount();
+    
     std::cout << "All is well.\n";
     return 0;
 }
