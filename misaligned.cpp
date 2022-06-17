@@ -1,20 +1,21 @@
 #include <iostream>
 #include <assert.h>
 #include <string.h>
-#define NUMBER_OF_COLORS 5
+#define NUMBER_OF_MAJOR_COLORS 5
+#define NUMBER_OF_MINOR_COLORS 5
 
 const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
 const char* minorColor[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
 
 int fetchMajorColorFromPairNumber(const int pairNumber) {
     const int zeroBasedPairNumber = pairNumber - 1;
-    const int majorColorNumber = zeroBasedPairNumber / NUMBER_OF_COLORS;
+    const int majorColorNumber = zeroBasedPairNumber / NUMBER_OF_MAJOR_COLORS;
     return majorColorNumber;  
 }
 
 int fetchMinorColorFromPairNumber(const int pairNumber) {
     const int zeroBasedPairNumber = pairNumber - 1;
-    const int minorColorNumber = zeroBasedPairNumber % NUMBER_OF_COLORS;
+    const int minorColorNumber = zeroBasedPairNumber % NUMBER_OF_MINOR_COLORS;
     return minorColorNumber;
 }
 
@@ -32,7 +33,7 @@ void printFormatedColorPair(std::string colorPairString)
 
 void validateColorPairString(int majorColorIndex, int minorColorIndex, const std::string colorPairString)
 {
-    const int colorPairNumber = majorColorIndex * NUMBER_OF_COLORS + minorColorIndex + 1;
+    const int colorPairNumber = majorColorIndex * NUMBER_OF_MAJOR_COLORS + minorColorIndex + 1;
     int acceptedMajorColor = fetchMajorColorFromPairNumber(colorPairNumber);
     int acceptedMinorColor = fetchMinorColorFromPairNumber(colorPairNumber);
 
